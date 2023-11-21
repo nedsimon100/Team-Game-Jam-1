@@ -4,31 +4,27 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [HideInInspector]
     public GameObject Player;
-
-
     public Rigidbody2D rb;
+    // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        rb = this.GetComponent<Rigidbody2D>(); 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag != "Player") 
         {
         
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject); // destroys anything that gets hit other than the player
             
-            Camera.main.orthographicSize /= 1.025f;
+            Camera.main.orthographicSize /= 1.025f; // reduces screen size on every collision
         }
 
-        Destroy(this.gameObject);
+        Destroy(this.gameObject); // destroys projectile
     }
 }

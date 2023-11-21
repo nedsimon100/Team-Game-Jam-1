@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Variables")]
+    public float dashDist = 10f;
+
+    [HideInInspector]
     public GameObject Player;
     public Rigidbody2D rb;
-    public float dashDist = 10f;
-    // Start is called before the first frame update
+
+    // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
+        rb = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
+    // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     void Update()
     {
         if((transform.position-Player.transform.position).magnitude > dashDist)
         {
-            rb.velocity = Player.transform.position - transform.position;
+            rb.velocity = Player.transform.position - transform.position; // aims at player and dashes towards them but stops changing direction if in certain radius of player
         }
         
     }
