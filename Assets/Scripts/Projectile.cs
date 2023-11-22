@@ -21,8 +21,8 @@ public class Projectile : MonoBehaviour
         {
         
             Destroy(collision.gameObject); // destroys anything that gets hit other than the player
-            
-            Camera.main.orthographicSize /= 1.025f; // reduces screen size on every collision
+
+            Player.GetComponent<Scaler>().changeCamSize(-0.015f); // reduces screen size on every collision
         }
 
         Destroy(this.gameObject); // destroys projectile

@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float fireForce = 5;
     public float topSpeed = 10;
     public bool dead = false;
-    public float playerSizeMult = 1.025f;
+    public float playerSizeMult = 0.05f;
 
     [HideInInspector]
     public Vector2 mousePosition;
@@ -43,8 +43,8 @@ public class PlayerController : MonoBehaviour
            
             projectile.GetComponent<Rigidbody2D>().AddForce((transform.up) * fireForce, ForceMode2D.Impulse); // adds force to bullet
             this.rb.AddForce(((-transform.up) * fireForce)/2, ForceMode2D.Impulse); // adds force to player (could scale with Player size?)
-            sceneCamera.orthographicSize *= 1.02f;// increases screen size (if switched to projection it may be alot smoother by using a rigid body and setting its velocity to (0,0,targetScreenSize - currentPosition.z)
-            this.transform.localScale *= playerSizeMult; // increases player size
+            this.GetComponent<Scaler>().changeCamSize(0.01f); // changes player size using scaler script
+            this.GetComponent<Scaler>().changeSize(playerSizeMult); // changes player size using scaler script
            
         }
     }
@@ -56,21 +56,35 @@ public class PlayerController : MonoBehaviour
         Aim(); // you can probably figure this one out
         shoot();// you can probably figure this one out
         rb.velocity = Vector2.ClampMagnitude(rb.velocity,topSpeed); // prevent player from attaining infinate speed
-        
-        if (dead) // restarts level on death (Temporary till end screen is implemented
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
+        checkDead();
+        colourChanger();
     }
     // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void checkDead()
     {
-        this.transform.localScale /= 2f; // halfs player size on collision
         if (this.transform.localScale.y < 0.5f)
         {
             dead = true; // kills player if they are under half original size
         }
+
+        if (dead) // restarts level on death (Temporary till end screen is implemented
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+    // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    public void colourChanger()
+    {
+        Color colour = new Color(0.25f / transform.localScale.y, transform.localScale.y*0.25f, transform.localScale.x* 0.25f); // changes player color based off of size as form of health bar
+        this.gameObject.GetComponent<TrailRenderer>().startColor = colour; // sets trail color to match player
+        this.gameObject.GetComponent<SpriteRenderer>().color = colour; // sets player color
+    }
+    // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        this.GetComponent<Scaler>().changeSize(-0.5f); // halfs player size on collision
+
         Destroy(collision.gameObject); // destroys what hit player so they dont get hit again next frame
     }
 }

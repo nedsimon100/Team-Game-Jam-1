@@ -22,13 +22,13 @@ public class StayOnScreen : MonoBehaviour
         if (thisScreenPos.x < -0.01|| thisScreenPos.x > 1.01) // checks if player is off either side of the screen
         {
             // flips x position but only 99% so that it dosent teleport back on the frame straight after
-            this.transform.position = new Vector2((-this.transform.position.x * 0.99f), this.transform.position.y); 
+            this.transform.position = new Vector2((-this.transform.position.x * 0.97f), this.transform.position.y); 
             tr.Clear(); // clears trail renderer to prevent lines accross screen
         }
         if (thisScreenPos.y < -0.01 || thisScreenPos.y > 1.01)// same as above but for y position
         {
             
-            this.transform.position = new Vector2(this.transform.position.x, (-this.transform.position.y*0.99f));
+            this.transform.position = new Vector2(this.transform.position.x, (-this.transform.position.y*0.97f));
             tr.Clear();
         }
     }

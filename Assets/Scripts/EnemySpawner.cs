@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public List<GameObject> enemies = new List<GameObject>(); // list of enemies so lots can be added without any code changes
 
     public int hardestEnemyIndex=1;
-    public float spawnTimerMin=1f, spawnTimerMax=5f;
+    public float spawnTimerMin=1f, spawnTimerMax=3f;
 
     // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
@@ -20,9 +20,12 @@ public class EnemySpawner : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(Time.timeSinceLevelLoad%20 == 20 && hardestEnemyIndex < enemies.Count - 1) // every 20 seconds stronger enemies can spawn
+        if(Time.timeSinceLevelLoad%20 == 20) // every 20 seconds stronger enemies can spawn
         {
-            hardestEnemyIndex++;
+            if(hardestEnemyIndex < enemies.Count - 1)
+            {
+                hardestEnemyIndex++;
+            }
             spawnTimerMin *= 0.9f; // reduces min and max spwan timer
             spawnTimerMax *= 0.95f;
         }
@@ -34,8 +37,24 @@ public class EnemySpawner : MonoBehaviour
     {
         while(true)
         {
-            // spawns enemy at random offscreen position to right which is then switched around the camera by the stay on screen script until its visible
-            Instantiate(enemies[Random.Range(0, hardestEnemyIndex)], new Vector3(Camera.main.ViewportToWorldPoint(new Vector2(Random.Range(1.2f, 2f),0)).x, Camera.main.ViewportToWorldPoint(new Vector2(0, Random.Range(-1f, 2f))).y, 0), this.transform.rotation);
+            
+            int side = Random.Range(0, 4); // finds random number to decide which side to spawn on
+            switch (side)
+            {
+                case 0:
+                    Instantiate(enemies[Random.Range(0, hardestEnemyIndex)], Camera.main.ViewportToWorldPoint(new Vector3(1.1f, Random.Range(0f, 1f))), this.transform.rotation);
+                    break;
+                case 1:
+                    Instantiate(enemies[Random.Range(0, hardestEnemyIndex)], Camera.main.ViewportToWorldPoint(new Vector3(-0.1f, Random.Range(0f, 1f))), this.transform.rotation);
+                    break;
+                case 2:
+                    Instantiate(enemies[Random.Range(0, hardestEnemyIndex)], Camera.main.ViewportToWorldPoint(new Vector3( Random.Range(0f, 1f), 1.1f)), this.transform.rotation);
+                    break;
+                case 3:
+                    Instantiate(enemies[Random.Range(0, hardestEnemyIndex)], Camera.main.ViewportToWorldPoint(new Vector3( Random.Range(0f, 1f), -0.1f)), this.transform.rotation);
+                    break;
+            }
+            
 
             yield return new WaitForSeconds(Random.Range(spawnTimerMin,spawnTimerMax));
         }

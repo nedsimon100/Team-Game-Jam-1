@@ -424,6 +424,7 @@ GameObject:
   - component: {fileID: 1869967710}
   - component: {fileID: 1869967711}
   - component: {fileID: 1869967712}
+  - component: {fileID: 1869967713}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -512,12 +513,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1869967709}
   sceneCamera: {fileID: 519420031}
-  mousePosition: {x: 0, y: 0}
   bullet: {fileID: 8975129931448749203, guid: 6f3718300f4af1c4ab991df56a05eadc, type: 3}
   fireForce: 10
   topSpeed: 10
   dead: 0
-  playerSizeMult: 1.025
+  playerSizeMult: 0.075
+  mousePosition: {x: 0, y: 0}
 --- !u!50 &1869967709
 Rigidbody2D:
   serializedVersion: 4
@@ -679,8 +680,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.9555495, b: 0, a: 1}
-      key1: {r: 0.7830189, g: 0.13683826, b: 0, a: 1}
+      key0: {r: 0.40066934, g: 1, b: 0, a: 1}
+      key1: {r: 0, g: 0.13839388, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -688,7 +689,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65535
+      ctime1: 64764
       ctime2: 0
       ctime3: 0
       ctime4: 0
@@ -719,6 +720,20 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1869967713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869967705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b9597f9a38488409b54a53cbf5f4a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTimeIncrement: 0.01
+  changeTime: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
