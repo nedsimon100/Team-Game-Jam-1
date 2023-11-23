@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     public void checkDead()
     {
-        if (this.transform.localScale.y < 0.5f)
+        if (this.transform.localScale.y < 0.5f)//*camera.main.orthegraphicSize/10
         {
             dead = true; // kills player if they are under half original size
         }
